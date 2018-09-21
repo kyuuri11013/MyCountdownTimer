@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 //isRunning = true // カウントダウンを開始するフラグを設定
                 when (isPausing) {
                     true -> {
-                        this.isPausing = false
+                        //this.isPausing = false
                         start()  // startメソッドでカウントダウンを開始
                         MyCountDownTimer( beforeCount.toLong() * 1000, 100)
                     }
