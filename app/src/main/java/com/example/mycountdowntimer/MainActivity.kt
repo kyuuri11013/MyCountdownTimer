@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     inner class MyCountDownTimer(millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {
        //var isRunning = false  // 現在カウントダウン中か停止中かを表すフラグ
         var isPausing = false
+       var isRunning = false  // 現在カウントダウン中か停止中かを表すフラグ
 
         // コンストラクタで指定した間隔で呼び出される
         override fun onTick(millisUntilFinished: Long) {
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         // CountDownTimerを継承したクラスのインスタンスを作成
         // タイマーの継続時間として3分、onTickメソッドが呼ばれる間隔として0.1秒を設定
         val timer = MyCountDownTimer( count.toLong() * 1000, 100)
+        val timer = MyCountDownTimer( 3 * 60 * 1000, 100)
 
         // フローティングアクションボタンがタップされたときのリスナーを設定
         play.setOnClickListener {
@@ -71,6 +73,17 @@ class MainActivity : AppCompatActivity() {
                         MyCountDownTimer( beforeCount.toLong() * 1000, 100)
                     }
                     false -> start()  // startメソッドでカウントダウンを開始
+        playStop.setOnClickListener {
+            when (timer.isRunning) {
+                true ->  timer.apply {
+                    isRunning = false  // 停止するフラグを設定
+                    cancel()  // CountDownTimerクラスのcancelメソッドでカウントダウンを停止
+                    playStop.setImageResource(R.drawable.ic_play_arrow_black_24dp)
+                }
+                false -> timer.apply {
+                    isRunning = true  // カウントダウンを開始するフラグを設定
+                    start()  // startメソッドでカウントダウンを開始
+                    playStop.setImageResource(R.drawable.ic_stop_black_24dp)
                 }
             }
         }
